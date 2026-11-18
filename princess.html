@@ -1,0 +1,438 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Queen Komal's Royal Kingdom 👑</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  font-family:Georgia,serif;
+  color:white;
+  background:linear-gradient(135deg,#170923,#54205f,#9e397d);
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
+/* DOOR INTRO */
+#intro{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
+  padding:20px;
+  background:radial-gradient(circle,#62275e,#170923);
+}
+
+#intro h1{
+  font-size:clamp(30px,7vw,48px);
+  color:#ffe4a3;
+  text-shadow:0 0 25px pink;
+  margin-bottom:20px;
+}
+
+.door-frame{
+  width:260px;
+  height:370px;
+  border:9px solid #e7bd62;
+  border-radius:140px 140px 5px 5px;
+  background:linear-gradient(#ffb3e5,#6b174d);
+  box-shadow:0 0 45px gold;
+  perspective:1000px;
+}
+
+.door{
+  width:100%;
+  height:100%;
+  background:linear-gradient(90deg,#70174c,#c65b94,#70174c);
+  border:5px ridge gold;
+  border-radius:130px 130px 0 0;
+  transform-origin:left;
+  transition:transform 2s ease;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:80px;
+  position:relative;
+}
+
+.door:after{
+  content:"👑";
+  position:absolute;
+  font-size:60px;
+}
+
+.open .door{transform:rotateY(-120deg)}
+
+.knob{
+  position:absolute;
+  right:18px;
+  top:55%;
+  color:gold;
+  font-size:23px;
+}
+
+button{
+  border:none;
+  border-radius:40px;
+  padding:15px 28px;
+  margin:20px 5px;
+  background:linear-gradient(45deg,#ffb2de,#ffe5a1);
+  color:#762052;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 0 25px pink;
+  transition:.3s;
+}
+
+button:hover{transform:scale(1.08)}
+
+/* MAIN KINGDOM */
+#main{
+  display:none;
+  min-height:100vh;
+  padding:55px 15px;
+  animation:fadeIn 2s;
+}
+
+@keyframes fadeIn{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+.card{
+  max-width:760px;
+  margin:auto;
+  padding:35px 22px;
+  border:2px solid #ffe3a3;
+  border-radius:30px;
+  text-align:center;
+  background:rgba(255,255,255,.10);
+  box-shadow:0 0 40px #ff83d3;
+}
+
+h1{
+  font-size:clamp(36px,8vw,65px);
+  color:#ffe4a3;
+  text-shadow:0 0 20px pink;
+  margin:20px 0;
+}
+
+.queen-name{
+  font-size:clamp(48px,10vw,82px);
+  color:#ffb9e5;
+  text-shadow:0 0 20px white,0 0 40px #ff55bc;
+  animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+  to{text-shadow:0 0 30px white,0 0 60px #ff55bc}
+}
+
+.crown{
+  font-size:85px;
+  animation:float 2s infinite;
+}
+
+@keyframes float{
+  50%{transform:translateY(-12px)}
+}
+
+p{
+  font-size:19px;
+  line-height:1.9;
+  margin:20px auto;
+  max-width:650px;
+}
+
+.section{
+  margin:30px 0;
+  padding:25px 18px;
+  border-radius:22px;
+  background:#ffffff16;
+  border:1px solid #ffffff65;
+}
+
+.section h2{
+  color:#ffe6a8;
+  margin-bottom:15px;
+  font-size:26px;
+}
+
+/* QUEEN AND KNIGHT */
+.royal-scene{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:30px;
+  flex-wrap:wrap;
+  padding:25px 5px;
+}
+
+.character{
+  text-align:center;
+  min-width:110px;
+}
+
+.character .emoji{
+  font-size:95px;
+  display:block;
+  filter:drop-shadow(0 0 15px pink);
+}
+
+.character small{
+  display:block;
+  color:#ffe4a3;
+  font-size:16px;
+  margin-top:10px;
+}
+
+.heart{
+  font-size:45px;
+  animation:heartbeat 1s infinite;
+}
+
+@keyframes heartbeat{
+  50%{transform:scale(1.3)}
+}
+
+/* BUTTERFLIES */
+.butterfly{
+  position:fixed;
+  z-index:150;
+  pointer-events:none;
+  font-size:32px;
+  animation:fly 7s ease-in-out forwards;
+}
+
+@keyframes fly{
+  0%{transform:translate(0,0) rotate(0);opacity:0}
+  10%{opacity:1}
+  30%{transform:translate(100px,-180px) rotate(25deg)}
+  60%{transform:translate(-80px,-350px) rotate(-25deg)}
+  100%{transform:translate(130px,-650px) rotate(25deg);opacity:0}
+}
+
+footer{
+  padding:25px;
+  color:#ffe4bd;
+  font-size:16px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ROYAL DOOR -->
+<div id="intro">
+
+  <h1>✨ A Magical Kingdom ✨</h1>
+  <p>Someone very special is waiting inside...</p>
+
+  <div class="door-frame" id="frame">
+    <div class="door">
+      <span class="knob">●</span>
+    </div>
+  </div>
+
+  <p style="color:#ffd4ed">
+    💗 Knock, knock! The Queen's kingdom awaits 💗
+  </p>
+
+  <button onclick="openDoor()">🚪 Open The Royal Door</button>
+</div>
+
+
+<!-- QUEEN'S KINGDOM -->
+<div id="main">
+
+<div class="card">
+
+  <div class="crown">👑</div>
+
+  <h1>Happy Princess Day</h1>
+
+  <div class="queen-name">Queen Komal</div>
+
+  <p>🌸 Welcome to your magical kingdom, Your Majesty! 🌸</p>
+
+  <div class="section">
+    <h2>💖 A Special Message For Komal 💖</h2>
+
+    <p>
+      Dear Komal,
+      You are not just a beautiful girl; you are a whole
+      fairytale with a heart full of magic. Your smile is
+      brighter than the stars, your beauty is like a blooming
+      rose, and your presence makes the world a little more
+      beautiful.
+    </p>
+
+    <p>
+      You deserve a kingdom filled with happiness, a crown
+      made of diamonds, flowers in every garden, and a life
+      where every dream comes true.
+    </p>
+
+    <p>
+      Never let anyone make you feel less than a queen.
+      Always remember your worth, keep your head high,
+      and continue shining like the brightest star in the sky.
+    </p>
+
+    <p>
+      May every sunrise bring you new happiness, every
+      sunset bring you peace, and every moment remind
+      you how precious you are.
+    </p>
+
+    <h2>👑 You will always be a Queen! 👑</h2>
+  </div>
+
+
+  <!-- QUEEN AND HER KNIGHT -->
+  <div class="section">
+
+    <h2>⚔️ The Queen & Her Brave Knight ⚔️</h2>
+
+    <div class="royal-scene">
+
+      <div class="character">
+        <span class="emoji">👸🏻</span>
+        <small>Queen Komal</small>
+      </div>
+
+      <div class="heart">❤️</div>
+
+      <div class="character">
+        <span class="emoji">🧎🏻‍♂️</span>
+        <small>Her Loyal Knight</small>
+      </div>
+
+    </div>
+
+    <p>
+      In a kingdom far away, there lived a beautiful Queen
+      named Komal. She had a heart of gold and a smile
+      that could light up the darkest night.
+    </p>
+
+    <p>
+      A brave knight stood before her, kneeling with respect,
+      promising to protect her kingdom, honour her dreams,
+      and always remind her that she deserves the very best.
+    </p>
+
+    <p>
+      For every Queen deserves respect, loyalty, kindness,
+      and a fairytale full of beautiful memories. 💗
+    </p>
+
+  </div>
+
+
+  <div class="section">
+    <h2>🦋 Your Magical World 🦋</h2>
+
+    <p>
+      May butterflies follow your dreams, flowers bloom
+      wherever you go, and stars shine especially for you.
+    </p>
+
+    <button onclick="butterflyParty()">
+      🦋 Release Magical Butterflies
+    </button>
+  </div>
+
+
+  <div class="section">
+
+    <h2>🎁 A Royal Surprise</h2>
+
+    <p>One last little surprise is waiting for you...</p>
+
+    <button onclick="showGift()">💝 Open Your Gift</button>
+
+    <div id="gift" style="display:none">
+      <h1 style="font-size:35px">I LOVE YOU, QUEEN KOMAL! 💗</h1>
+      <p>
+        You deserve all the love, happiness and magic
+        this world has to offer. Keep smiling, Queen!
+      </p>
+      <div style="font-size:55px">💐👑💎🦋💖</div>
+    </div>
+
+  </div>
+
+  <footer>
+    Made with endless love for Queen Komal 💗<br>
+    ✨ Her Majesty, Her Beautiful Story ✨
+  </footer>
+
+</div>
+</div>
+
+
+<script>
+
+function openDoor(){
+
+  document.getElementById("frame").classList.add("open");
+
+  document.querySelector("#intro p:last-of-type").innerText =
+    "🦋 Welcome to your kingdom, Queen Komal! 🦋";
+
+  // Butterflies fly out of the door
+  butterflyParty();
+
+  setTimeout(()=>{
+    document.getElementById("intro").style.display="none";
+    document.getElementById("main").style.display="block";
+
+    window.scrollTo({top:0,behavior:"smooth"});
+
+    setTimeout(butterflyParty,500);
+  },2100);
+}
+
+function butterflyParty(){
+
+  for(let i=0;i<35;i++){
+
+    setTimeout(()=>{
+
+      let b=document.createElement("div");
+      b.className="butterfly";
+      b.innerHTML=["🦋","🦋","💖","🦋","✨"][Math.floor(Math.random()*5)];
+
+      b.style.left=(20+Math.random()*60)+"vw";
+      b.style.top=(40+Math.random()*40)+"vh";
+      b.style.animationDuration=(5+Math.random()*4)+"s";
+
+      document.body.appendChild(b);
+
+      setTimeout(()=>b.remove(),10000);
+
+    },i*100);
+  }
+}
+
+function showGift(){
+  document.getElementById("gift").style.display="block";
+  butterflyParty();
+}
+
+</script>
+
+</body>
+</html>
